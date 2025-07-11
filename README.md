@@ -17,6 +17,11 @@ SMTP_PASS=yourpassword
 # Recipient email address
 SMTP_TO=recipient@email.com
 
+# SSL CERTS
+SSL_CERT_PATH=fullchain.pem
+SSL_KEY_PATH=privkey.pem
+
+
 # (Optional) Server port
 PORT=8080
 ```
