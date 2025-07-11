@@ -1,0 +1,13 @@
+{
+  "name": "contact-form-handler",
+  "version": "1.0.0",
+  "description": "Node.js service to handle contact form submissions and send emails via SMTP.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.8"
+  }
+} 
