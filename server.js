@@ -57,6 +57,6 @@ const sslOptions = {
   cert: fs.readFileSync(process.env.SSL_CERT_PATH)
 };
 
-https.createServer(sslOptions, app).listen(PORT, () => {
+https.createServer(sslOptions, app).listen(PORT,'0.0.0.0', () => {
   console.log(`Secure server running on port ${PORT}`);
 });
