@@ -27,6 +27,9 @@ fi
 echo "Copying server.js to $APP_DIR..."
 install -m 644 server.js "$APP_DIR/"
 
+echo "Copying node_modules to $APP_DIR..."
+install node_modules "$APP_DIR/"
+
 echo "Copying $SERVICE_FILE to $SYSTEMD_PATH..."
 install -m 644 "$SERVICE_FILE" "$SYSTEMD_PATH"
 
