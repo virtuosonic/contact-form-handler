@@ -1,0 +1,12 @@
+[Unit]
+Description=Contact Form Handler Node.js Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/contact-form-handler
+ExecStart=/usr/bin/node /opt/contact-form-handler/server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
