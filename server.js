@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const https = require('https');
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -47,7 +49,14 @@ app.post('/form', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const PORT = process.env.PORT || 8443;
+
+// Load SSL certificate and key from environment variables
+const sslOptions = {
+  key: fs.readFileSync(process.env.SSL_KEY_PATH),
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH)
+};
+
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`Secure server running on port ${PORT}`);
 });
