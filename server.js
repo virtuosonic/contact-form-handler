@@ -73,7 +73,7 @@ app.post("/form", upload.none(), async (req, res) => {
     message.length > 2000
   ) {
     console.log("Invalid form input:", { name, mail, subject, message });
-    return res.status(400).json({ success: false, error: "Invalid form input length." });
+    return res.status(400).json({ success: false, error: "Tamaño no valido." });
   }
 
   // Verify reCAPTCHA token
@@ -88,7 +88,7 @@ app.post("/form", upload.none(), async (req, res) => {
 
   if (!isRecaptchaValid) {
     console.log("reCAPTCHA verification failed for token:", recaptchaToken);
-    return res.status(400).json({ success: false, error: "reCAPTCHA verification failed." });
+    return res.status(400).json({ success: false, error: "Verificación reCAPTCHA fallida." });
   }
 
   // Extract domain from Host header
@@ -121,12 +121,12 @@ app.post("/form", upload.none(), async (req, res) => {
       text: `Name: ${name}\nEmail: ${mail}\n\n${message}`,
       replyTo: mail,
     });
-    res.json({ success: true, message: "Thank you for your message!" });
+    res.json({ success: true, message: "Gracias por su mensaje!" });
   } 
   catch (err) 
   {
     console.log('error sending message',err);
-    res.status(500).json({ success: false, error: `Error sending message: ${err.message}` });
+    res.status(500).json({ success: false, error: `Error enviando mensaje: ${err.message}` });
   }
 });
 
