@@ -57,13 +57,13 @@ app.post("/form", async (req, res) => {
     message.length > 2000
   ) {
     console.log("Invalid form input:", { name, mail, subject, message });
-    return res.status(400).send("<h1>Invalid form input length.</h1>");
+    return res.status(400).json({ success: false, error: "Invalid form input length." });
   }
 
   // Verify reCAPTCHA token
   if (!recaptchaToken) {
     console.log("reCAPTCHA token is missing");
-    return res.status(400).send("<h1>reCAPTCHA token is required.</h1>");
+    return res.status(400).json({ success: false, error: "reCAPTCHA token is required." });
   }
 
   const clientIP =
@@ -72,7 +72,7 @@ app.post("/form", async (req, res) => {
 
   if (!isRecaptchaValid) {
     console.log("reCAPTCHA verification failed for token:", recaptchaToken);
-    return res.status(400).send("<h1>reCAPTCHA verification failed.</h1>");
+    return res.status(400).json({ success: false, error: "reCAPTCHA verification failed." });
   }
 
   // Extract domain from Host header
@@ -91,13 +91,13 @@ app.post("/form", async (req, res) => {
   });
 
   try {
-	console.log("Sending email with the following details:", {
-	  from: `"Web Contact" <${process.env.SMTP_USER}>`,
-	  to: process.env.SMTP_TO,
-	  subject: `[${domain}] Contact Form: ${subject}`,
-	  text: `Name: ${name}\nEmail: ${mail}\n\n${message}`,
-	  replyTo: mail,
-	});
+    console.log("Sending email with the following details:", {
+      from: `"Web Contact" <${process.env.SMTP_USER}>`,
+      to: process.env.SMTP_TO,
+      subject: `[${domain}] Contact Form: ${subject}`,
+      text: `Name: ${name}\nEmail: ${mail}\n\n${message}`,
+      replyTo: mail,
+    });
     await transporter.sendMail({
       from: `"Web Contact" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_TO,
@@ -105,12 +105,12 @@ app.post("/form", async (req, res) => {
       text: `Name: ${name}\nEmail: ${mail}\n\n${message}`,
       replyTo: mail,
     });
-    res.send("<h1>Thank you for your message!</h1>");
+    res.json({ success: true, message: "Thank you for your message!" });
   } 
   catch (err) 
   {
     console.log('error sending message',err);
-    res.status(500).send(`<h1>Error sending message: ${err.message}</h1>`);
+    res.status(500).json({ success: false, error: `Error sending message: ${err.message}` });
   }
 });
 
