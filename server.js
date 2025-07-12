@@ -83,7 +83,7 @@ app.post("/form", async (req, res) => {
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
-    secure: false,
+    secure: true,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
@@ -92,7 +92,7 @@ app.post("/form", async (req, res) => {
 
   try {
 	console.log("Sending email with the following details:", {
-	  from: `"Web Contact" <no-reply@${process.env.SMTP_USER}>`,
+	  from: `"Web Contact" <${process.env.SMTP_USER}>`,
 	  to: process.env.SMTP_TO,
 	  subject: `[${domain}] Contact Form: ${subject}`,
 	  text: `Name: ${name}\nEmail: ${mail}\n\n${message}`,
@@ -109,6 +109,7 @@ app.post("/form", async (req, res) => {
   } 
   catch (err) 
   {
+    console.log('error sending message',err);
     res.status(500).send(`<h1>Error sending message: ${err.message}</h1>`);
   }
 });

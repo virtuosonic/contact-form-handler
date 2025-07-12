@@ -42,6 +42,7 @@ PORT=8443
 RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 RECAPTCHA_MIN_SCORE=0.5
 ```
+If you have problem with authentication try putting the value quoted ""
 
 ### 3. reCAPTCHA v3 Setup
 
