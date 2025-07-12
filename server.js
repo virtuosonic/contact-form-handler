@@ -4,6 +4,8 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const https = require("https");
 const fetch = require("node-fetch");
+const multer = require('multer');
+const upload = multer();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -52,7 +54,7 @@ async function verifyRecaptcha(token, remoteip) {
   }
 }
 
-app.post("/form", async (req, res) => {
+app.post("/form", upload.none(), async (req, res) => {
   const { name, mail, subject, message, recaptchaToken } = req.body;
 
   // Basic field length validation
