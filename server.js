@@ -9,6 +9,20 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// CORS middleware: allow origin based on Host header
+app.use((req, res, next) => {
+  const hostHeader = req.headers.host || "";
+  const domain = hostHeader.split(":")[0];
+  res.setHeader("Access-Control-Allow-Origin", `https://${domain}`);
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 // reCAPTCHA v3 verification function
 async function verifyRecaptcha(token, remoteip) {
   try {
