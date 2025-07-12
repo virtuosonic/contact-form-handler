@@ -99,7 +99,7 @@ app.post("/form", async (req, res) => {
 	  replyTo: mail,
 	});
     await transporter.sendMail({
-      from: `"Web Contact" <no-reply@${process.env.SMTP_USER}>`,
+      from: `"Web Contact" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_TO,
       subject: `[${domain}] Contact Form: ${subject}`,
       text: `Name: ${name}\nEmail: ${mail}\n\n${message}`,
